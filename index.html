@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dungeon Loot Splitter</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header>
+        <h1>Dungeon Loot Splitter</h1>
+    </header>
+    <main>
+        <section class="panel">
+            <h2>Party Setup</h2>
+            <label for="partySize">Number of Party Members:</label>
+            <input type="number" id="partySize" min="1" value="1">
+        </section>
+
+        <section class="panel">
+            <h2>Add Loot</h2>
+            <label for="lootName">Loot Name:</label>
+            <input type="text" id="lootName">
+            <br><br>
+            <label for="lootValue">Loot Value:</label>
+            <input type="number" id="lootValue" step="0.01">
+            <br><br>
+            <button id="addLootBtn">Add Loot</button>
+            <p id="lootError" class="error-text"></p>
+        </section>
+
+        <section class="panel">
+            <h2>Loot List</h2>
+            <ul id="lootDisplay"></ul>
+            <p>Total Loot: $<span id="runningTotal">0.00</span></p>
+        </section>
+
+        <section class="panel">
+            <h2>Split Loot</h2>
+            <button id="splitLootBtn">Split Loot</button>
+            <p id="splitError" class="error-text"></p>
+            <p>Total Loot: $<span id="finalTotal">0.00</span></p>
+            <p>Loot Per Party Member: $<span id="lootPerMember">0.00</span></p>
+        </section>
+
+        <section class="panel reflection">
+            <h2>Logic Explanation</h2>
+            <p>My array stores objects that contain the name and value of each piece of loot entered. I use a traditional for loop in my render function to loop through the array, add up the total value, and create the list items that show up on the page. I use conditional logic (if statements) when the buttons are clicked to make sure the party size is at least 1, the loot name is not empty, and the loot value isn't negative before updating the array or splitting the gold.</p>
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+</body>
+</html>
