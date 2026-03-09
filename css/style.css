@@ -8,14 +8,14 @@ body {
     color: #333;
     margin: 0;
     padding: 20px;
-    min-height: 100vh; 
+    min-height: 100vh;
 }
 
 header {
     text-align: center;
     margin-bottom: 20px;
     color: white; 
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5); 
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
 main {
@@ -27,7 +27,7 @@ main {
 .panel {
     background-color: #fdfdfd;
     padding: 25px;
-    border: 2px solid #b8860b; 
+    border: 2px solid #b8860b;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
 }
@@ -37,8 +37,20 @@ main {
     color: #b8860b; 
     border-bottom: 2px solid #eee;
     padding-bottom: 5px;
+    margin-bottom: 15px;
 }
 
+/* Strict vertical alignment for Input Forms */
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 15px;
+}
+
+.input-group label {
+    margin-bottom: 5px;
+    font-weight: bold;
+}
 
 input[type="text"],
 input[type="number"] {
@@ -46,8 +58,8 @@ input[type="number"] {
     border: 1px solid #ccc;
     border-radius: 4px;
     width: 100%; 
-    max-width: 200px; 
 }
+
 button {
     background-color: #4ca1af;
     color: white;
@@ -56,10 +68,19 @@ button {
     font-size: 16px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background-color 0.3s; 
+    transition: background-color 0.3s;
+    width: 100%; 
+}
 
-button:hover {
-    background-color: #2c3e50; 
+button:hover:not(:disabled) {
+    background-color: #2c3e50;
+}
+
+/* New requirement: Disabled Button State */
+button:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
 
 .error-text {
     color: #d9534f;
@@ -67,17 +88,75 @@ button:hover {
     margin-top: 10px;
 }
 
-ul {
-    list-style-type: square; 
+/* New requirement: Hiding/Showing via CSS class */
+.hidden {
+    display: none !important;
 }
 
+/* Professor's Required Loot List Grid Styling */
+#noLootMessage {
+    font-style: italic;
+    color: #666;
+}
+
+#lootRows {
+    display: contents;
+}
+
+.loot-table {
+    display: grid;
+    grid-template-columns: 3fr 1fr 1fr 1fr;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.loot-header {
+    font-weight: 600;
+    border-bottom: 2px solid #ccc;
+    padding-bottom: 0.25rem;
+}
+
+.loot-row {
+    display: contents;
+}
+
+.loot-cell {
+    padding: 0.25rem 0;
+    word-break: break-word; 
+}
+
+.loot-cell button {
+    width: 100%;
+    padding: 5px;
+    background-color: #d9534f;
+}
+
+.loot-cell button:hover {
+    background-color: #c9302c;
+}
+
+.total-row {
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: right;
+    padding-top: 10px;
+    border-top: 2px solid #eee;
+}
+
+#splitResults p {
+    margin: 10px 0;
+    font-size: 1.1em;
+}
+
+/* Original Phase 1 Mobile Breakpoint */
 @media (min-width: 768px) {
     main {
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 1.5rem;
-        max-width: 900px; 
-        margin: 0 auto; 
+        max-width: 900px;
+        margin: 0 auto;
     }
     
     header {
@@ -86,5 +165,9 @@ ul {
 
     .reflection {
         grid-column: span 2;
+    }
+    
+    button {
+        width: auto;
     }
 }
