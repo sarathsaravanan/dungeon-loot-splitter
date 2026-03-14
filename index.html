@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dungeon Loot Splitter - Phase 2</title>
+    <title>Dungeon Loot Splitter - Phase 3</title>
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -17,6 +17,7 @@
                 <label for="partySize">Number of Party Members:</label>
                 <input type="number" id="partySize" min="1" step="1" value="1">
             </div>
+            <button id="resetAllBtn" class="secondary-btn">Reset All</button>
         </section>
 
         <section class="panel">
@@ -67,7 +68,7 @@
 
         <section class="panel reflection">
             <h2>Logic Explanation</h2>
-            <p>In Phase 2, my loot array and party size serve as the single source of truth. I added a quantity property to the loot objects to track multiples. The <code>updateUI()</code> function centralizes all logic: it calculates totals by multiplying value and quantity, and re-renders the DOM every time a state change occurs (like adding/removing loot or changing party size). I use conditional logic inside <code>updateUI()</code> to hide the table and disable the split button when the state is invalid (like having 0 items) to protect data integrity.</p>
+            <p>In Phase 3, I managed the application lifecycle by persisting state with localStorage. Whenever a valid mutation occurs (adding/removing loot or changing party size), I use JSON.stringify() to convert the state into a string and save it. When the page reloads, a DOMContentLoaded listener triggers restoreState(), which uses JSON.parse() to turn the string back into an object. Inside restoreState(), I use defensive programming to validate the parsed data before pushing it into my array. The updateUI() function is called strictly after restoration, ensuring the DOM is only built after the "single source of truth" is fully loaded.</p>
         </section>
     </main>
 

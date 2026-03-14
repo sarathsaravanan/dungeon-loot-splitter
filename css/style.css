@@ -40,7 +40,6 @@ main {
     margin-bottom: 15px;
 }
 
-/* Strict vertical alignment for Input Forms */
 .input-group {
     display: flex;
     flex-direction: column;
@@ -76,10 +75,19 @@ button:hover:not(:disabled) {
     background-color: #2c3e50;
 }
 
-/* New requirement: Disabled Button State */
 button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+.secondary-btn {
+    background-color: #7f8c8d;
+    margin-top: 10px;
+}
+
+.secondary-btn:hover {
+    background-color: #bdc3c7;
+    color: #333;
 }
 
 .error-text {
@@ -88,12 +96,10 @@ button:disabled {
     margin-top: 10px;
 }
 
-/* New requirement: Hiding/Showing via CSS class */
 .hidden {
     display: none !important;
 }
 
-/* Professor's Required Loot List Grid Styling */
 #noLootMessage {
     font-style: italic;
     color: #666;
@@ -149,7 +155,6 @@ button:disabled {
     font-size: 1.1em;
 }
 
-/* Original Phase 1 Mobile Breakpoint */
 @media (min-width: 768px) {
     main {
         display: grid;

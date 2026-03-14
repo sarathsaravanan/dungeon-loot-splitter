@@ -1,9 +1,81 @@
+const STORAGE_KEY = "lootSplitterState";
+
 let lootItems = [];
+let partySize = 1;
 
 // listens for the clicks on our main buttons
 document.getElementById("addLootBtn").addEventListener("click", addLoot);
 document.getElementById("splitLootBtn").addEventListener("click", updateUI);
-document.getElementById("partySize").addEventListener("input", updateUI);
+document.getElementById("resetAllBtn").addEventListener("click", resetAll);
+
+document.getElementById("partySize").addEventListener("input", function() {
+    let inputVal = document.getElementById("partySize").value;
+    if (inputVal !== "" && Number(inputVal) >= 1) {
+        partySize = Number(inputVal);
+        saveState();
+    }
+    updateUI();
+});
+
+document.addEventListener("DOMContentLoaded", function() {
+    restoreState();
+    updateUI();
+});
+
+function saveState() {
+    let stateObj = {
+        loot: lootItems,
+        partySize: partySize
+    };
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(stateObj));
+}
+
+function restoreState() {
+    partySize = 1;
+    lootItems = [];
+    
+    let savedData = localStorage.getItem(STORAGE_KEY);
+    
+    if (savedData) {
+        try {
+            let parsed = JSON.parse(savedData);
+            
+            if (typeof parsed === "object" && parsed !== null) {
+                if (typeof parsed.partySize === "number" && parsed.partySize >= 1) {
+                    partySize = parsed.partySize;
+                }
+                
+                if (Array.isArray(parsed.loot)) {
+                    for (let i = 0; i < parsed.loot.length; i++) {
+                        let item = parsed.loot[i];
+                        if (item.name && typeof item.name === "string" && item.name.trim() !== "" &&
+                            typeof item.value === "number" && item.value >= 0 &&
+                            typeof item.quantity === "number" && item.quantity >= 1) {
+                            
+                            lootItems.push({
+                                name: item.name,
+                                value: item.value,
+                                quantity: item.quantity
+                            });
+                        }
+                    }
+                }
+            }
+        } catch (e) {
+            partySize = 1;
+            lootItems = [];
+        }
+    }
+    document.getElementById("partySize").value = partySize;
+}
+
+function resetAll() {
+    lootItems = [];
+    partySize = 1;
+    document.getElementById("partySize").value = 1;
+    localStorage.removeItem(STORAGE_KEY);
+    updateUI();
+}
 
 function addLoot() {
     let nameInput = document.getElementById("lootName").value;
@@ -45,18 +117,19 @@ function addLoot() {
     document.getElementById("lootValue").value = "";
     document.getElementById("lootQuantity").value = "1";
 
+    saveState();
     updateUI();
 }
 
 function removeLoot(index) {
     lootItems.splice(index, 1);
+    saveState();
     updateUI();
 }
 
 // function to update teh screen to show the newly added item
 function updateUI() {
     let partySizeInput = document.getElementById("partySize").value;
-    let partySize = Number(partySizeInput);
     
     let lootRows = document.getElementById("lootRows");
     let noLootMessage = document.getElementById("noLootMessage");
@@ -143,5 +216,3 @@ function updateUI() {
         splitResults.classList.add("hidden");
     }
 }
-
-updateUI();
